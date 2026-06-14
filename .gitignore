@@ -1,0 +1,37 @@
+# Python environments and caches
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+.env
+.env.*
+!.env.example
+*.log
+
+# Packaging
+build/
+dist/
+*.egg-info/
+
+# Editors and operating systems
+.idea/
+.vscode/
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# Local effect-frame libraries are large and may have separate licenses.
+effects/
+
+# Runtime models downloaded by download_models.py. The small hand detector is
+# kept in Git because its public source requires a PyTorch-to-ONNX conversion.
+models/*
+!models/hand_yolov8n.onnx

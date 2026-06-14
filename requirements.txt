@@ -1,0 +1,6 @@
+matplotlib>=3.9
+mediapipe>=0.10.35
+numpy>=2.1
+onnxruntime>=1.26
+opencv-python>=4.10
+Pillow>=11.0
