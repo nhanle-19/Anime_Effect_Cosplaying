@@ -1,16 +1,17 @@
 # Anime Effect Cosplaying
 
-Turn anime hand-sign sequences into live, pose-triggered effects.
+This is a fun project for trying anime hand-sign sequences in front of a
+webcam and getting an effect when the pose matches.
 
-The camera watches your hand poses in order. CLIP automatically decides which
-poses deserve an effect, then the effect follows your hand, face, eyes, or the
+It follows the hand poses in order, and CLIP tries to figure out which effect
+goes with each pose. The effect can follow your hand, face, eyes, or cover the
 whole frame.
 
 <p align="center">
   <img src="input/3.jpg" alt="Anime effect pose" width="820">
 </p>
 
-## See It Work
+## Example
 
 <table>
   <tr>
@@ -23,9 +24,9 @@ whole frame.
   </tr>
 </table>
 
-## Summon It
+## How To Run
 
-Python 3.10+ is recommended.
+Python 3.10+ should work.
 
 ```bash
 git clone https://github.com/nhanle-19/Anime_Effect_Cosplaying.git
@@ -37,24 +38,24 @@ python -m pip install -r requirements.txt
 python download_models.py
 ```
 
-Analyze an image:
+To test it on one image:
 
 ```bash
 python track_image.py input/3.jpg
 ```
 
-Run the live pose sequence with automatic VLM effect selection:
+For the live camera version with automatic effect matching:
 
 ```bash
 python -m pip install -r requirements-vlm.txt
 python track_actual.py --vlm-effect-match --effects-dir effects
 ```
 
-Press `Q` or `Esc` to stop.
+Press `Q` or `Esc` when you want to stop.
 
-## Make Your Own Sequence
+## Add Your Own Pose Sequence
 
-Put one clear hand pose in each image. Number the files in casting order:
+Put one clear hand pose in each image and number them in the order you want:
 
 ```text
 my_sequence/
@@ -63,9 +64,9 @@ my_sequence/
   03_fireball.png
 ```
 
-Effect poses should visibly contain the effect you want. Clean poses should not.
-The VLM maps each image to an effect or `none`; no manual frame mapping is
-needed.
+If a pose should trigger an effect, use an image that shows that effect. For
+normal poses, use a clean image. The VLM handles the effect matching, so you do
+not need to manually say which pose uses which effect.
 
 ```bash
 python track_actual.py \
@@ -76,7 +77,8 @@ python track_actual.py \
 
 ## Add Effects
 
-Create one folder per animated effect. PNG frames are played in filename order:
+Make one folder for each animated effect. The PNG frames play in filename
+order:
 
 ```text
 effects/
@@ -91,8 +93,8 @@ effects/
     galaxy-00002.png
 ```
 
-Use RGBA PNGs with transparent backgrounds. Add optional metadata to control
-where the effect appears:
+RGBA PNGs with transparent backgrounds work best. You can add `effect.json` to
+say where the effect should appear:
 
 ```json
 {
@@ -103,10 +105,10 @@ where the effect appears:
 
 Attachments: `hand`, `eyes`, `face`, or `frame`.
 
-Effect assets are intentionally ignored by Git because animation libraries can
-be huge and may have separate licenses.
+The effect folders are ignored by Git because they can get very large and may
+have their own licenses.
 
-## Useful Spells
+## More Commands
 
 ```bash
 # Test on a video
@@ -124,14 +126,14 @@ python track_actual.py --effect-dir effects/fire_circle
 python track_video.py input/clip.mp4
 ```
 
-Use `python track_actual.py --help` for every option.
+Run `python track_actual.py --help` to see the other options.
 
-## The Magic Behind It
+## How It Works
 
-- MediaPipe tracks live hands and faces.
-- YOLO + RTMPose analyze reference images and offline media.
-- CLIP visually matches pose images to effect libraries.
-- Procrustes pose matching tolerates movement, scale, rotation, and reflection.
+- MediaPipe tracks the live hand and face.
+- YOLO + RTMPose find hand poses in images and videos.
+- CLIP matches the pose images with effects.
+- Pose matching still works if the hand moves, rotates, or changes size.
 
-The repository stays small: `download_models.py` fetches and verifies the
-required runtime models after cloning.
+The larger models are not kept in the repository. `download_models.py`
+downloads them after cloning.
