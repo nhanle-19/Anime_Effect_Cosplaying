@@ -106,7 +106,7 @@ say where the effect should appear:
 Attachments: `hand`, `eyes`, `face`, or `frame`.
 
 The effect folders are ignored by Git because they can get very large and may
-have their own licenses.
+have their own licenses, so you should create your own folder called `effects`
 
 ## More Commands
 
